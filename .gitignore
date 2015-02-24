@@ -1,0 +1,23 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+void primesInAnInterval(int from ,int to)
+{
+	if((from>=to) || (from<=0) || (to<=0)) {cout<<"invalid input"; return;}
+	for(int i=from;i<=to;i++)
+	{
+		int tmp=sqrt(i);
+		int count=0;
+		for(int j=2;j<=tmp;j++)
+		{
+			if((i%j)==0) count++;
+		}
+		if(!count) cout<<i<<" ";
+	}
+}
+int main()
+{
+	int from,to;
+	cin>>from>>to;
+	primesInAnInterval(from, to);
+}
