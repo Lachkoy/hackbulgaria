@@ -1,0 +1,35 @@
+#include<iostream>
+#include<dirent.h>
+#include<cstring>
+using namespace std;
+void listDuplicatingFiles(char* a)
+{
+	DIR* curr=NULL;
+	struct dirent *pent=NULL;
+	curr=opendir(a);
+	if(curr==NULL) cout<<"err";
+	int  c=0;
+	while(pent=readdir(curr))
+	{
+		c++;
+		if(pent->d_type==16384 && c>=3)
+		{
+			char *b=new char[strlen(a)+3+strlen(pent->d_name)];
+			strcpy(b,a);
+			strcat(b,"\\");
+			strcat(b,pent->d_name);
+			listDuplicatingFiles(b);
+		}
+		else
+		{
+			if(c>=3)
+            {
+                 cout<<pent->d_name<<" ";
+            }
+        }
+	}
+}
+int main()
+{
+	listDuplicatingFiles("D:\Downloads");
+}
