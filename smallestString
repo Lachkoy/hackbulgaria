@@ -1,0 +1,67 @@
+#include<iostream>
+//#include<string>
+#include<string.h>
+using namespace std;
+
+ bool containsAlphabet(char* str)
+{
+ char alphabet[27] = "abcdefghijklmnopqrstuvwxyz";
+ char temp[27] = "**************************";
+ int k;
+
+ for(int i=0; i<strlen(str); ++i)
+ {
+  k = str[i] - 'a';
+  temp[k] = str[i];
+ }
+
+ return !strcmp(alphabet, temp)? true : false;
+}
+char* getSubString(char * str,int start,int endd)
+{
+    char *a =new char[endd-start+1];
+
+    int k=0;
+    for(int i=start;i<endd;i++)
+    {
+        a[k]=str[i];
+        k++;
+    }
+    a[k]='\0';
+    return a;
+
+}
+char* smallestSubstringContainingTheAlphabet(char * str)
+{
+    if(!containsAlphabet(str)) {cout<<"the string doesnt contain the alphabet";return NULL;}
+    else
+    {
+    char* newbuff=new char[strlen(str)+1];
+    strcpy(newbuff,str);
+	for(int i=0;i<strlen(str);i++)
+    {
+       for(int j=i+1;j<=strlen(str);j++)
+        {
+           if(containsAlphabet(getSubString(str,i,j)))
+           {
+               if(strlen(getSubString(str,i,j))<strlen(newbuff))
+                {
+                      delete[]newbuff;
+                  newbuff=new char[strlen(getSubString(str,i,j))+1];
+                  strcpy(newbuff,getSubString(str,i,j));
+                }
+            }
+        }
+
+    }
+
+return newbuff;
+}
+}
+
+int main()
+{
+cout<<smallestSubstringContainingTheAlphabet("aabcdefghijklaamnopqrstuvwxyzaa");
+
+return 0;
+}
